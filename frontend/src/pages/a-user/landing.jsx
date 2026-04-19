@@ -1,32 +1,72 @@
-import { Leaf, Heart, Truck, ArrowRight, ShoppingCart, User } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Leaf, Heart, Truck, ArrowRight, User } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import background from '../../assets/background.jpg'
+import background from '../../assets/background.jpg';
 
 export default function LandingPage() {
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 60);
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
     return (
         <div className="font-sans text-gray-800">
             {/* NAVBAR */}
-            <header className="fixed top-0 left-0 w-full z-50 backdrop-blur bg-white/10 border-b border-white/20">
+            <header
+                className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+                    scrolled
+                        ? "bg-white shadow-md border-b border-gray-100"
+                        : "backdrop-blur bg-white/10 border-b border-white/20"
+                }`}
+            >
                 <div className="max-w-full flex items-center justify-between px-6 py-4">
-
-                    <div className="flex items-center gap-2 text-green-600 font-semibold text-lg">
+                    {/* Logo */}
+                    <div className="flex items-center gap-2 font-semibold text-lg">
                         <div className="bg-green-600 p-2 rounded-full text-white">
                             <Leaf size={25} />
                         </div>
-                        <p className="text-green-600 text-2xl">Verdant Plant</p>
+                        <p className={`text-2xl transition-colors duration-300 ${scrolled ? "text-green-600" : "text-white"}`}>
+                            Verdant Plant
+                        </p>
                     </div>
 
-                    <div className="flex justify-center items-center gap-4">
+                    <div className="flex justify-center items-center gap-10">
                         {/* NAV LINKS */}
                         <nav className="hidden md:flex gap-8 text-sm">
-                            <Link to="/" className="text-green-600">Home</Link>
-                            <Link to="/shop" className="text-white hover:text-green-600">Shop</Link>
-                            <Link to="/about" className="text-white hover:text-green-600">About</Link>
+                            <Link
+                                to="/"
+                                className={`font-medium border-b-2 transition-colors duration-300 ${
+                                    scrolled ? "text-green-600" : "text-green-600"
+                                }`}
+                            >
+                                Home
+                            </Link>
+                            <Link
+                                to="/shop"
+                                className={`transition-colors duration-300 ${
+                                    scrolled ? "text-gray-600 hover:text-green-600" : "text-white/80 hover:text-white"
+                                }`}
+                            >
+                                Shop
+                            </Link>
+                            <Link
+                                to="/about"
+                                className={`transition-colors duration-300 ${
+                                    scrolled ? "text-gray-600 hover:text-green-600" : "text-white/80 hover:text-white"
+                                }`}
+                            >
+                                About
+                            </Link>
                         </nav>
 
                         {/* Login */}
-                        <div className="bg-white rounded-full p-2">
+                        <div className={`rounded-full p-2 transition-colors duration-300 ${scrolled ? "bg-green-50" : "bg-white"}`}>
                             <Link to="/login">
                                 <User className="text-green-600 cursor-pointer hover:scale-110 transition" />
                             </Link>
@@ -40,6 +80,7 @@ export default function LandingPage() {
                 <img
                     src={background}
                     className="absolute inset-0 w-full h-full object-cover"
+                    alt="background"
                 />
                 <div className="absolute inset-0 bg-black/40" />
 
@@ -52,13 +93,19 @@ export default function LandingPage() {
                     </p>
 
                     <div className="flex gap-4 justify-center">
-                        <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full flex items-center gap-2">
+                        <Link
+                            to="/shop"
+                            className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full flex items-center gap-2 transition"
+                        >
                             Shop Now
                             <ArrowRight size={14} />
-                        </button>
-                        <button className="border border-white text-white px-6 py-3 rounded-full hover:bg-white hover:text-gray-800 transition">
+                        </Link>
+                        <Link
+                            to="/shop"
+                            className="border border-white text-white px-6 py-3 rounded-full hover:bg-white hover:text-gray-800 transition"
+                        >
                             Explore Plants
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </section>
@@ -73,35 +120,19 @@ export default function LandingPage() {
                 </p>
 
                 <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                    <div className="bg-white rounded-xl p-6 shadow">
-                        <div className="bg-green-100 w-12 h-12 flex items-center justify-center rounded-full mx-auto mb-4">
-                            <Leaf className="text-green-600" />
+                    {[
+                        { icon: <Leaf className="text-green-600" />, title: "Premium Quality", desc: "Hand-selected plants from trusted growers, ensuring health and vitality." },
+                        { icon: <Heart className="text-green-600" />, title: "Expert Care Tips", desc: "Detailed care instructions with every plant to help you succeed." },
+                        { icon: <Truck className="text-green-600" />, title: "Fast Delivery", desc: "Ensuring your plants arrive safely and quickly." },
+                    ].map(({ icon, title, desc }) => (
+                        <div key={title} className="bg-white rounded-xl p-6 shadow hover:shadow-md hover:-translate-y-1 transition-all">
+                            <div className="bg-green-100 w-12 h-12 flex items-center justify-center rounded-full mx-auto mb-4">
+                                {icon}
+                            </div>
+                            <h3 className="font-semibold mb-2">{title}</h3>
+                            <p className="text-sm text-gray-500">{desc}</p>
                         </div>
-                        <h3 className="font-semibold mb-2">Premium Quality</h3>
-                        <p className="text-sm text-gray-500">
-                            Hand-selected plants from trusted growers, ensuring health and vitality.
-                        </p>
-                    </div>
-
-                    <div className="bg-white rounded-xl p-6 shadow">
-                        <div className="bg-green-100 w-12 h-12 flex items-center justify-center rounded-full mx-auto mb-4">
-                            <Heart className="text-green-600" />
-                        </div>
-                        <h3 className="font-semibold mb-2">Expert Care Tips</h3>
-                        <p className="text-sm text-gray-500">
-                            Detailed care instructions with every plant to help you succeed.
-                        </p>
-                    </div>
-
-                    <div className="bg-white rounded-xl p-6 shadow">
-                        <div className="bg-green-100 w-12 h-12 flex items-center justify-center rounded-full mx-auto mb-4">
-                            <Truck className="text-green-600" />
-                        </div>
-                        <h3 className="font-semibold mb-2">Fast Delivery</h3>
-                        <p className="text-sm text-gray-500">
-                            Ensuring your plants arrive safely and quickly.
-                        </p>
-                    </div>
+                    ))}
                 </div>
             </section>
 
@@ -113,11 +144,13 @@ export default function LandingPage() {
                 <p className="mb-8 text-white/80">
                     Discover our collection of beautiful plants and start your green journey today.
                 </p>
-
-                <button className="bg-white text-green-600 px-6 py-3 rounded-full flex items-center gap-2">
+                <Link
+                    to="/shop"
+                    className="bg-white text-green-600 px-6 py-3 rounded-full flex items-center gap-2 hover:bg-green-50 transition"
+                >
                     Browse Collection
                     <ArrowRight size={14} />
-                </button>
+                </Link>
             </section>
         </div>
     );

@@ -1,7 +1,9 @@
-import { Leaf, Heart, Truck, ShoppingCart, Sprout, Users, Award, Globe, ArrowRight, ChevronRight } from "lucide-react";
+import { Leaf, Heart, Sprout, Users, Award, Globe, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import Header from "../../components/Header";
 
-const NAV_LINKS = ["Home", "Shop", "About", "Admin"];
+import background from '../../assets/background.jpg';
+
 
 const STORY_PARAGRAPHS = [
   "Founded in 2020, Verdant Haven began with a simple mission: to make plant ownership accessible, enjoyable, and sustainable for everyone. What started as a small local shop has grown into a thriving community of plant lovers.",
@@ -64,41 +66,12 @@ const SHOP_CATEGORIES = [
   },
 ];
 
-import background from '../../assets/background.jpg'
 
 
 export default function About() {
   return (
     <div className="min-h-screen bg-white font-sans">
-      {/* NAVBAR */}
-      <nav className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-9 h-9 bg-green-500 rounded-full flex items-center justify-center">
-              <Leaf size={18} className="text-white" />
-            </div>
-            <span className="font-bold text-gray-800 text-lg tracking-tight">Verdant Haven</span>
-          </Link>
-          <div className="flex items-center gap-8">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link}
-                to={`/${link.toLowerCase()}`}
-                className={`text-sm font-medium transition-colors ${
-                  link === "About"
-                    ? "text-green-600 border-b-2 border-green-500 pb-0.5"
-                    : "text-gray-500 hover:text-gray-800"
-                }`}
-              >
-                {link}
-              </Link>
-            ))}
-            <button className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-green-600 relative">
-              <ShoppingCart size={20} />
-            </button>
-          </div>
-        </div>
-      </nav>
+      <Header />
 
       {/* HERO HEADER */}
       <section className="py-16 text-center px-6">
@@ -119,11 +92,7 @@ export default function About() {
           </div>
         </div>
         <div className="rounded-2xl overflow-hidden shadow-md h-72 md:h-96 bg-gray-100">
-          <img
-            src="/plants-bg.jpg"
-            alt="Our store"
-            className="w-full h-full object-cover"
-          />
+          <img src={background} alt="Our store" className="w-full h-full object-cover" />
         </div>
       </section>
 
@@ -156,7 +125,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* SHOP CATEGORIES — User-friendly product indicators */}
+      {/* SHOP CATEGORIES */}
       <section className="max-w-6xl mx-auto px-6 pb-20">
         <div className="text-center mb-10">
           <span className="text-xs font-semibold text-green-600 bg-green-50 px-3 py-1 rounded-full uppercase tracking-wider">
