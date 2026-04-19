@@ -12,29 +12,23 @@ import {
 
 } from "lucide-react";
 
-
-
 export default function AuthPage() {
     const [form, setForm] = useState({ email: "", password: "" });
     const navigate = useNavigate();
     const [access, setAccess] = useState();
 
-
     // temporary login
     const handleLogin = () => {
-        if (form.email === "user" && form.password === "user123") {
+        if (form.email === "user" && form.password === "user") {
             localStorage.setItem("role", "user");
-            navigate("/landing");
+            navigate("/");
         } else {
             localStorage.setItem("role", "admin");
             navigate("/dashboard");
         }
     };
-
-
     const handleChange = (e) =>
         setForm({ ...form, [e.target.name]: e.target.value });
-
 
     return (
         <div className="min-h-screen w-full flex items-center justify-center bg-gray-100 px-4">

@@ -5,6 +5,7 @@ import ScrollToTop from "./assets/toScrollTop";
 import AuthPage from "./pages/authPage";
 import About from "./pages/a-user/about";
 import Shop from "./pages/a-user/shop";
+import Cart from "./pages/a-user/cart";
 
 
 function App() {
@@ -18,8 +19,10 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/about" element={<About />} />
         <Route path="/shop" element={<Shop />} />
-        
+        <Route path="/cart" element={<Cart />} />
         {/* Admin */}
+        {/* dito yung admin routes */}
+  
        
       </Routes>
     </Router>
